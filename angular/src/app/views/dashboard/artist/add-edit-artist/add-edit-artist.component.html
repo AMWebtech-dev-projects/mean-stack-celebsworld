@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-12">
+        <h2 class="text-primary"><b>{{newArtist._id ? 'Edit':'Add'}} Artist</b></h2>
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="form-group mb-20">
+                    <label class="font-weight-bold mg-b-0" for="categoryImg">
+                        Artist Image
+                        <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                [ngClass]="{'text-secondary': !newArtist?.artistImage, 'text-primary': newArtist?.artistImage}"></i>
+                        </sup>
+                    </label>
+                    <!-- <input class="form-control" type="file" accept='image/jpeg,image/jpg,image/png'> -->
+                    <div class="profileImgDiv">
+                        <label class="hoverable" for="fileInput">
+                            <img *ngIf="artistConfig.ProfileImg.imageUrl || !newArtist._id"
+                                [src]="artistConfig.ProfileImg.imageUrl ? artistConfig.ProfileImg.imageUrl : 'https://www.w3schools.com/howto/img_avatar.png'"
+                                class="img-fluid" width="175px" height="175px">
+                            <img *ngIf="!artistConfig.ProfileImg.imageUrl"
+                                [src]="newArtist?.artistImage ? newArtist?.artistImage : 'https://www.w3schools.com/howto/img_avatar.png'"
+                                class="img-fluid" width="175px" height="175px">
+                            <div class="hover-text"><span>Choose file</span></div>
+                            <!-- <div class="background"></div> -->
+                        </label>
+                        <!-- <br /> -->
+                        <input #imgFileInput id="fileInput" type='file' (change)="selectProfileImg($event)"
+                            accept='image/jpeg,image/jpg,image/png'>
+                        <button *ngIf="artistConfig.ProfileImg.imageUrl || newArtist.artistImage" class="close"
+                            (click)="deleteImg()"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="form-group mb-30">
+                    <label class="font-weight-bold mg-b-0">
+                        Artist Name
+                        <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                [ngClass]="{'text-secondary': !newArtist?.name, 'text-primary': newArtist?.name}"></i>
+                        </sup>
+                    </label>
+                    <input type="text" id="name" maxlength="60" [(ngModel)]="newArtist.name" name="name"
+                        class="form-control" placeholder="Please enter Artist name" appRemoveWhitespace>
+                </div>
+
+                <div class="form-group mb-20">
+                    <label class="font-weight-bold mg-b-0" for="categoryImg">
+                        Select Profession
+                        <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                [ngClass]="{'text-secondary': !newArtist?.profession, 'text-primary': newArtist?.profession}"></i>
+                        </sup>
+                    </label>
+                    <select [(ngModel)]="newArtist.profession" name="newArtistProfession" id="newArtistProfession"
+                        class="form-control text-capitalize">
+                        <option value="">Select Profession</option>
+                        <option *ngFor="let category of artistConfig.categoryList" [value]="category.name">
+                            {{category.name}}</option>
+                        <option value="" *ngIf="!artistConfig.categoryList.length">No Category Found</option>
+                    </select>
+
+                </div>
+                <div class="form-group mb-20">
+                    <label class="font-weight-bold mg-b-0" for="categoryImg">
+                        Select Language
+                        <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                [ngClass]="{'text-secondary': !newArtist?.language, 'text-primary': newArtist?.language}"></i>
+                        </sup>
+                    </label>
+                    <ng-multiselect-dropdown name="Category" [(ngModel)]="newArtist.language"
+                        [placeholder]="'Select Language '" [settings]="MultiSelectSettings"
+                        [data]="artistConfig.celebLang">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mb-30">
+                    <label class="font-weight-bold mg-b-0">
+                        Artist Bio
+                        <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                [ngClass]="{'text-secondary': !newArtist?.artistBio, 'text-primary': newArtist?.artistBio}"></i>
+                        </sup>
+                    </label>
+                    <angular-editor [(ngModel)]="newArtist.artistBio" [config]="config"
+                        [placeholder]="'Enter text here...'"></angular-editor>
+                </div>
+
+                <div class="form-group mb-30">
+                    <label class="font-weight-bold mg-b-0">
+                        Time Responsce
+
+                    </label>
+                    <!-- <ngx-slider [(value)]="minDays" [(highValue)]="maxDays" [options]="options"></ngx-slider> -->
+                    <div class="row">
+                        <div class="col-6">
+                            <span>Min Days <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                        [ngClass]="{'text-secondary': !newArtist?.minTimeResponsce, 'text-primary': newArtist?.minTimeResponsce}"></i>
+                                </sup></span><br>
+                            <input [min]="minValDays" [(ngModel)]="newArtist.minTimeResponsce" [max]="maxValDays"
+                                class="form-control" [value]="minValDays" type="number" numbersOnly maxlength="2"
+                                (blur)="validateMinMax($event.target.value, 'min')" [max]="maxValDays">
+                        </div>
+                        <div class="col-6">
+                            <span>Max Days <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                        [ngClass]="{'text-secondary': !newArtist?.maxTimeResponsce, 'text-primary': newArtist?.maxTimeResponsce}"></i>
+                                </sup></span><br>
+                            <input [(ngModel)]="newArtist.maxTimeResponsce" [value]="newArtist.minTimeResponsce"
+                                [min]="newArtist.minTimeResponsce" [max]="maxValDays" class="form-control" type="number"
+                                numbersOnly maxlength="2" (blur)="validateMinMax($event.target.value, 'max')">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-30">
+                    <label class="font-weight-bold mg-b-0">
+                        Price
+                        <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                [ngClass]="{'text-secondary': !newArtist?.artistPrice, 'text-primary': newArtist?.artistPrice}"></i>
+                        </sup>
+                    </label>
+                    <ngx-slider [(value)]="newArtist.artistPrice" [options]="optionsPrice">
+                    </ngx-slider>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" (click)="uploadImg()">Submit</button>
+                    <button [routerLink]="['/artists/manage-artist']" class="btn btn-primary ml-1">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <pre [innerHTML]="artistConfig.ProfileImg | json"> </pre> -->
+<!-- <pre [innerHTML]="newArtist | json"> </pre> -->

@@ -1,0 +1,223 @@
+<carousel data-interval="false" id="carouselindicators" class="carousel slide slide-animated" [noWrap]="noWrapSlides"
+  [showIndicators]="showIndicator">
+  <!-- *ngFor="let slide of slides; let index=index" -->
+  <slide style="background-image: url('/assets/img/hero-banner-musicians.jpg');">
+    <!-- <img [src]="slide.image" alt="image slide" style="display: block; width: 100%;"> -->
+    <div class="banner banner-musicians carousel-caption d-flex justify-content-center align-items-center flex-column">
+      <div class="banner-inner">
+        <h1 class="animate__slideInDown">Surprised your loved ones with soothing energy rhythm</h1>
+        <p class="animate__slideInUp">Book personal acoustic message to share the feeling with the right tune as per the
+          occasion from your favorite music</p>
+        <div class="banner-btn_div animate__slideInUp">
+          <a [routerLink]="['/musicians']" class="btn btn-primary">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </slide>
+
+  <slide style="background-image: url('/assets/img/hero-banner-singers.jpg');">
+    <!-- <img [src]="slide.image" alt="image slide" style="display: block; width: 100%;"> -->
+    <div class="banner banner-singers carousel-caption d-flex justify-content-center align-items-center flex-column">
+      <div class="banner-inner ">
+        <h2 class="animate__slideInDown">Gifts personalized message from your favorite singers</h2>
+        <p class="animate__slideInUp">Engage with your ideal singers for shoutout videos & messages to provide the
+          unique &
+          direct experience
+        </p>
+        <div class="banner-btn_div animate__slideInUp">
+          <a [routerLink]="['/singers']" class="btn btn-primary">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </slide>
+
+  <slide style="background-image: url('/assets/img/hero-banner-lyricist.jpg');">
+    <!-- <img [src]="slide.image" alt="image slide" style="display: block; width: 100%;"> -->
+    <div class="banner banner-lyricist carousel-caption d-flex justify-content-center align-items-center flex-column">
+      <div class="banner-inner">
+        <h2 class="animate__slideInDown">Share your special feeling for your special ones with special words</h2>
+        <p class="animate__slideInUp">Connect with your celebrity writers to draft your special messages with special
+          words
+        <p>
+        <div class="banner-btn_div animate__slideInUp">
+          <a [routerLink]="['/lyricist']" class="btn btn-primary">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </slide>
+
+  <slide style="background-image: url('/assets/img/hero-banner-composers.jpg');">
+    <!-- <img [src]="slide.image" alt="image slide" style="display: block; width: 100%;"> -->
+    <div class="banner banner-lyricist carousel-caption d-flex justify-content-center align-items-center flex-column">
+      <div class="banner-inner">
+        <h2 class="animate__slideInDown">Deliver the perfect gifts, with perfect tunes</h2>
+        <p class="animate__slideInUp">Get composed your message from the famous music composers as per events nature</p>
+        <div class="banner-btn_div animate__slideInUp">
+          <a [routerLink]="['/composers']" class="btn btn-primary">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </slide>
+</carousel>
+
+
+<div class="wrapper">
+  <!-- banner section -->
+
+  <!-- talent section -->
+  <div class="menu-bg">
+    <div class="container">
+      <!-- <pre [innerHtml]="categoryList | json"> </pre> -->
+
+      <div class="row">
+        <ng-container *ngFor="let category of categoryList | slice:1">
+          <div class="col-md-3 col-6 mb-30">
+            <a [routerLink]="['/',category.name | lowercase | removeWhiteSpaces]">
+              <div class="image-4">
+                <img src="{{category.image}}">
+                <div class="talent">{{category.name}}</div>
+              </div>
+            </a>
+          </div>
+        </ng-container>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- fourth section -->
+  <div class="grid-1">
+    <div class="container">
+      <h2> <span>LATEST RELEASES</span>
+        <hr>
+      </h2>
+      <div class="row clip-3">
+        <div class="col-sm-12 col-md-6">
+          <div class="image-section">
+            <a href="#">
+              <div class="cat-img">
+                <img src="/assets/img/latest-releases-1.jpg">
+              </div>
+              <div class="head-section">
+                <div class="head-section-inner">
+                  <div class="name">music video</div>
+                  <div class="sname">here comes the sun</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="image-sect">
+                <a href="#">
+                  <div class="cat-img">
+                    <img src="/assets/img/latest-releases-2.jpg">
+                  </div>
+                  <div class="head-section">
+                    <div class="head-section-inner">
+                      <div class="name">lyrics</div>
+                      <div class="sname">here comes the sun</div>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="image-sect">
+                <a href="#">
+                  <div class="cat-img">
+                    <img src="/assets/img/latest-releases-3.jpg">
+                  </div>
+                  <div class="head-section">
+                    <div class="head-section-inner">
+                      <div class="name">song</div>
+                      <div class="sname">across the universe</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row space-g">
+            <div class="col-sm-6">
+              <div class="image">
+                <a href="#">
+                  <div class="cat-img">
+                    <img src="/assets/img/latest-releases-4.jpg">
+                  </div>
+                  <div class="head-section">
+                    <div class="head-section-inner">
+                      <div class="name">song</div>
+                      <div class="sname">eterna</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="image">
+                <a href="#">
+                  <div class="cat-img">
+                    <img src="/assets/img/latest-releases-5.jpg">
+                  </div>
+                  <div class="head-section">
+                    <div class="head-section-inner">
+                      <div class="name">music video</div>
+                      <div class="sname">louder than words</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- third section -->
+  <div class="grid ">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="nav nav-pills mb-20" id="pills-tab" role="tablist">
+            <!-- <li class="nav-item">
+              <a class="nav-link active" [class.active]="activeNav == 'all'" (click)="filterSelection('all')">All</a>
+            </li> -->
+            <li *ngFor="let category of categoryList, let i = index">
+              <a class="nav-link" [class.active]="activeNav == category.name" (click)="filterSelection(category.name)">{{category.name}}</a>
+            </li>
+          </ul>
+
+          <div class="">
+            <div class="row clip-1">
+              <ng-container *ngFor="let artist of artistList">
+                <div class="col-lg-3 col-md-4 col-sm-6 artist-category show mb-30 musicians">
+                  <!-- <a [routerLink]="['/',artist.profession | lowercase, artist.name | lowercase | removeWhiteSpaces]"> -->
+                  <a [routerLink]="['/',artist.profession, artist.name +'-'+ artist._id  | lowercase | removeWhiteSpaces]">
+                    <div class="cat-img">
+                      <div class="profession"><span>{{artist.profession | titlecase}}</span></div>
+                      <img src="{{artist.artistImage}}" width="200px" height="200px">
+                    </div>
+                    <div class="heading-section">
+
+                      <h4 class="name">{{artist.name | titlecase}}</h4>
+                      <div class="name mb-0 text-nowrap"><i class="fa fa-inr fa-sm" aria-hidden="true"></i> {{artist.artistPrice | number}}</div>
+                    </div>
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <pre [innerHtml]="celebData | json"> </pre> -->
+
+
+</div>

@@ -1,0 +1,232 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row justify-content-between">
+            <div class="col">
+                <h2 class="text-primary"><b>Order List</b></h2>
+            </div>
+            <!-- <hr /> -->
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="carc" style="min-height:550px">
+            <div class="text-left table-responsive pr-5p pl-5p">
+                <hr>
+                <table class="mt-20 table table-bordered table-hover table-striped" [dtOptions]="dtOptions" datatable
+                    [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr class="text-white text-nowrap bg-dark">
+                            <th class="text-white bg-dark" style="width: 50px;">S.No.</th>
+                            <th width="50px" class="text-white bg-dark">Image</th>
+                            <th class="text-white bg-dark">Artist Name</th>
+                            <th class="text-white bg-dark">Event Type</th>
+                            <th class="text-white bg-dark">User Name</th>
+                            <th class="text-white bg-dark">Amount</th>
+                            <th class="text-white bg-dark">Order Status</th>
+                            <th class="text-white bg-dark">Payment Status</th>
+                            <th class="text-white bg-dark text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of orderList; let i = index">
+                            <th>{{i + 1}}</th>
+                            <th><img src="{{order.artistId.artistImage}}" width="40px" height="40px" style="max-width:40px"></th>
+                            <th>{{order.artistId.name | titlecase}}</th>
+                            <th>Video Message</th>
+                            <th>{{order.userId.firstName +' '+ order.userId.lastName | titlecase}}</th>
+                            <th><span class="text-nowrap"><i class="fa fa-inr fa-sm" aria-hidden="true"></i> {{order.amount | number}}</span></th>
+                            <th><span [ngClass]="addOrderStatusClass(order.orderStatus, 'class')">{{addOrderStatusClass(order.orderStatus, 'orderStatusText')}}</span>
+                            </th>
+                            <th><span
+                                    [ngClass]="[order.paymentStatus == 'refunded' ? 'text-danger' : 'text-success']">{{order.paymentStatus | titlecase}}</span>
+                            </th>
+                            <th><button class="btn btn-primary" (click)="viewUserDetails(order)"><i class="fa fa-eye"></i></button></th>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <pre [innerHtml]="orderList | json"></pre> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #viewBookingModal="bs-modal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-white"><i class="fa fa-user"></i> Order Details</h4>
+                <button type="button" class="close text-white" (click)="closeModel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <pre [innerHTML]="OrderDetails | json"></pre> -->
+                <div class="d-flex mb-20" *ngIf="OrderDetails.artistId">
+                    <div class="artist-img pr-10">
+                        <img src="{{OrderDetails.artistId.artistImage}}" alt="" style="width: 120px;">
+                    </div>
+                    <div class="artist-info">
+                        <h4 class="mb-0 clr-primary">{{OrderDetails.artistId.name | titlecase}}</h4>
+                        <p class="mb-5p">{{OrderDetails.artistId.profession | titlecase}}</p>
+                        <p class="text-success mb-0 text-nowrap"><i class="fa fa-inr fa-sm" aria-hidden="true"></i> {{OrderDetails.amount | number}}</p>
+                        <p><span class="pr-10">Order Status:</span> <span>
+                            <strong [ngClass]="addOrderStatusClass(OrderDetails.orderStatus, 'class')">{{addOrderStatusClass(OrderDetails.orderStatus, 'orderStatusText')}}</strong>
+                        </span></p>
+                    </div>
+                </div>
+                <div type="pills">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item active">
+                            <a href="javascript:void(0);" class="nav-link" [class.active]="activeNav == 'userDetails'" (click)="showDiv('userDetails')">
+                                <span>User Details</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="OrderDetails.orderStatus !== 'cancel'">
+                            <a href="javascript:void(0);" [class.active]="activeNav == 'uploadVideo'" class="nav-link" (click)="showDiv('uploadVideo')"><span>Upload Video</span>
+                            </a>
+                        </li>
+                        <li ng-reflect-ng-class="nav-item," class="nav-item" *ngIf="OrderDetails.orderStatus !== 'submitted'">
+                            <a href="javascript:void(0);" class="nav-link" [class.active]="activeNav == 'RefundCancelOrder'" (click)="showDiv('RefundCancelOrder')"><span>Refund/Cancel Order</span></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div heading="User Details" class="tab-pane active" [class.active]="activeNav == 'userDetails'"  *ngIf="currentDiv == 'userDetails'">
+                            <h3>User Details</h3>
+                            <hr>
+                            <div class="w-100 table-responsive modal-table">
+                                <table class="w-100" *ngIf="OrderDetails">
+                                    <tr>
+                                        <td><strong class="text-nowrap">Name:</strong></td>
+                                        <td>{{OrderDetails?.userId?.firstName + ' ' + OrderDetails?.userId?.lastName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong class="text-nowrap">Email:</strong></td>
+                                        <td>{{OrderDetails?.userId?.email}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong class="text-nowrap">Contact number:</strong></td>
+                                        <td>{{OrderDetails?.userId?.phoneNumber}}</td>
+                                    </tr>
+                                    <tr *ngIf="OrderDetails.to">
+                                        <td><strong class="text-nowrap"> TO :</strong></td>
+                                        <td>{{OrderDetails.to}}</td>
+                                    </tr>
+                                    <tr *ngIf="OrderDetails.from">
+                                        <td><strong class="text-nowrap">From:</strong></td>
+                                        <td>{{OrderDetails.from}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong class="text-nowrap">Message:</strong></td>
+                                        <td>{{OrderDetails.message}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong class="text-nowrap">Event Date:</strong></td>
+                                        <td>{{OrderDetails.eventDate | date:'d/MM/yyyy'}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong class="text-nowrap">Post On Website:</strong></td>
+                                        <td>
+                                            <span *ngIf="OrderDetails.makeItPublic">No</span>
+                                            <span *ngIf="!OrderDetails.makeItPublic">Yes</span>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div heading="User Details" class="tab-pane" [class.active]="activeNav == 'uploadVideo'" *ngIf="OrderDetails.orderStatus !== 'cancel' && currentDiv == 'uploadVideo'">
+                            <h3>Upload Video</h3>
+                            <hr>
+                            <!-- <video [src]="url" *ngIf="format==='video' && url" height="200" controls></video> -->
+                            <div *ngIf="selectedVideo.videoUrl || OrderDetails.uploadUrl" class="mb-10">
+                                <video [src]="selectedVideo.videoUrl ? selectedVideo.videoUrl :OrderDetails.uploadUrl" class="img-fluid"
+                                    width="100%" controls></video>
+                            </div>
+                            <ng-container *ngIf="OrderDetails.orderStatus !== 'submitted'">
+                                <div class="form-group">
+
+                                    <label><strong>Video Status</strong></label>
+                                    <select name="" class="form-control" [(ngModel)]="uploadConfig.orderStatus">
+                                        <option value="" selected>Select Status</option>
+                                        <option *ngFor="let order of orderStatus | slice:2" [value]="order">{{order | titlecase}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Upload Video</strong></label>
+                                    <input #videoFileInput class="form-control" type="file" name="videoUpload"
+                                        accept="video/mp4,video/x-m4v,video/*" (change)="uploadVideoPreview($event)">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" (click)="uploadVideo(uploadConfig)">Submit</button>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div heading="User Details" class="tab-pane" [class.active]="activeNav == 'RefundCancelOrder'" *ngIf="OrderDetails.orderStatus !== 'submitted' && currentDiv == 'RefundCancelOrder'">
+                            <h3>Refund</h3>
+                            <hr>
+                            <!-- <pre [innerHtml]="OrderDetails | json"></pre> -->
+                            <ng-container *ngIf="OrderDetails.orderStatus !== 'cancel'">
+                                <div class="form-group">
+                                    <label><strong>Amount</strong></label>
+                                    <input class="form-control" type="text" [value]="OrderDetails.amount" ngDisabled disabled>
+                                </div>
+                                <div class="form-group" *ngIf="OrderDetails.refundComment !== undefined">
+                                    <label for="">Add Comment <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                                [ngClass]="{'text-secondary': !OrderDetails?.refundComment, 'text-primary': OrderDetails?.refundComment}"></i>
+                                        </sup></label>
+                                    <textarea class="form-control" name="refundComment" id="refundComment" cols="30" rows="4"
+                                        [(ngModel)]="OrderDetails.refundComment" placeholder="Add Comment for the Refund Amount"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <button class="btn btn-primary" (click)="confirmRefund(OrderDetails)"> -->
+                                    <button class="btn btn-primary" (click)="confirmRefundModal.show()" [disabled]="!OrderDetails.refundComment">
+                                        Refund Amount
+                                    </button>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="OrderDetails.orderStatus === 'cancel'">
+                                <div class="text-center d-flex justify-content-center align-items-center" style="min-height: 200px;">
+                                    <h4 class="text-primary">
+                                        That Order has been Canceled and Amount Refunded
+                                    </h4>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div bsModal #confirmRefundModal="bs-modal" class="modal fade" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-white"><i class="fa fa-user"></i> Refund Amount</h4>
+                <button type="button" class="close text-white" (click)="confirmRefundModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-center">
+                    <h4 class="text-danger">
+                        Are you sure you want to refund the amount
+                    </h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="confirmRefundModal.hide()">Close</button>
+                <button type="button" class="btn btn-danger" (click)="refundAmout()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

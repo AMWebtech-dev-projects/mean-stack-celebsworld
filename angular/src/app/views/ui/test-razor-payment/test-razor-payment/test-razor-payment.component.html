@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row justify-content-between">
+      <div class="col">
+        <h2 class="text-primary"><b>Testing-Component</b></h2>
+      </div>
+      <!-- <hr /> -->
+    </div>
+  </div>
+</div>
+
+<share-buttons [include]="['facebook','twitter','linkedin','whatsapp','copy']" theme="material-dark" show="11" image="https://loremflickr.com/320/240"  [url]="'https://twitter.com/'"></share-buttons>
+
+
+<div class="card">
+  <div class="card-body">
+    <div class="carc" style="min-height:550px">
+      <!--  <share-buttons [theme]="'material-dark'"
+        [include]="['facebook','twitter','linkedin','pinterest','reddit','mix','vk','telegram','messenger','whatsapp','xing','line','sms','email','copy','instagram']"
+        [show]="9" [size]="1" [url]="'https://www.eduforbetterment.com/generate-qr-code-in-angular/'"
+        [image]="'https://www.eduforbetterment.com/wp-content/uploads/2020/08/qrcode.jpg'" [autoSetMeta]="false">
+      </share-buttons> -->
+      <br> <br> <br>
+      <div class="text-left table-responsive pr-5p pl-5p">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              [ngClass]="{'text-danger': !userDetails?.fullName, 'text-primary': userDetails?.fullName}">
+              <i class="icon-user"></i>
+            </span>
+          </div>
+          <input class="form-control" [(ngModel)]="userDetails.fullName" name="FullName" type="text"
+            placeholder="Full Name">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              [ngClass]="{'text-danger': !userDetails?.amount, 'text-primary': userDetails?.amount}">
+              <i class="icon-user"></i>
+            </span>
+          </div>
+          <input class="form-control" [(ngModel)]="userDetails.amount" name="amount" type="text" placeholder="Amount">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"
+              [ngClass]="{'text-danger': !userDetails?.email, 'text-primary': userDetails?.email}">@</span>
+          </div>
+          <input class="form-control" [(ngModel)]="userDetails.email" name="email" type="text" placeholder="Email">
+        </div>
+        <button (click)="buyRazorPay()" class="btn btn-primary btn-block">PAY BY RAZOR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="novopay-response-modal modal fade" role="dialog" [ngClass]="{'show': showModal}" id="razorpay-response"
+  [ngStyle]="{'display': 'none'}">
+  {{razorpayResponse}}
+</div>

@@ -1,0 +1,40 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row justify-content-between">
+            <div class="col">
+                <h2 class="text-primary"><b>User List</b></h2>
+            </div>
+            <!-- <hr /> -->
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="carc" style="min-height:550px">
+            <div class="text-left table-responsive pr-5p pl-5p">
+                <hr>
+                <table class="mt-20 table table-bordered table-hover table-striped" [dtOptions]="dtOptions" datatable
+                    [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr class="text-white text-nowrap bg-dark">
+                            <th class="text-white bg-dark" style="width: 50px;">S.No.</th>
+                            <th class="text-white bg-dark">User Name</th>
+                            <th class="text-white bg-dark">Email</th>
+                            <th class="text-white bg-dark">Contact Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of userList; let i = index">
+                            <th>{{i + 1}}</th>
+                            <th>{{user.firstName + user.lastName}}</th>
+                            <th>{{user.email}}</th>
+                            <th>{{user.phoneNumber}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <pre [innerHtml]="userList | json"></pre> -->
+            </div>
+        </div>
+    </div>
+</div>

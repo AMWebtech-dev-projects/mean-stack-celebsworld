@@ -1,0 +1,38 @@
+@import '../../../scss/_variables';
+.app-dashboard-body img {
+    width: auto;
+}
+input[type=file] {
+    padding: 0;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: $primaryClr;
+}
+input[type=file]::file-selector-button {
+  background-color: $primaryClr;
+  transition: 1s;
+  height: 35px;
+  color: #fff;
+    border: 0;
+    border-radius: 4px 0px 0px 4px;
+    padding: 0 15px;
+    margin-right: 10px;
+}
+.app-dashboard-body {
+    padding-top: 55px;
+    background-color: #e4e5e6;
+    min-height: calc(100vh - 50px);
+}
+.text-primary {
+    color: $primaryClr !important;
+}
+.sidebar .nav-link.active .nav-icon {
+    color: #fff;
+}
+.sidebar .nav-link:hover {
+    background-color: $secondaryClr;
+}
+.sidebar .nav-link.active {
+    background-color: $primaryClr;
+}

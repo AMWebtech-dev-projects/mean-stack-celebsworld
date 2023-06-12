@@ -1,0 +1,38 @@
+<section class="page-banner bg-black pt-70 pb-70 ">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="inner_page-banner">
+                <h1 class="clr-white text-uppercase">{{artistType}}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="grid white-bg music-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="">
+                    <div class="row clip-1">
+                        <ng-container *ngFor="let artist of artistList">
+                            <div class="col-lg-3 col-md-4 col-sm-6 artist-category show mb-30 musicians">
+                                <!-- <a [routerLink]="['/',artist.profession | lowercase, artist.name | lowercase | removeWhiteSpaces]"> -->
+                                <a [routerLink]="['/',artist.profession, artist.name +'-'+ artist._id  | lowercase | removeWhiteSpaces]">
+                                    <div class="cat-img">
+                                        <div class="profession"><span>{{artist.profession | titlecase}}</span></div>
+                                        <img src="{{artist.artistImage}}"  width="200px" height="200px">
+                                    </div>
+                                    <div class="heading-section">
+                                        <h4 class="name">{{artist.name | titlecase}}</h4>
+                                        <div class="name mb-0"><span class="text-nowrap"><i class="fa fa-inr fa-sm" aria-hidden="true"></i> {{artist.artistPrice | number}}</span></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

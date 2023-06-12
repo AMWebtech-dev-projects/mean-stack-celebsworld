@@ -1,0 +1,129 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row justify-content-between">
+            <div class="col">
+                <h2 class="text-primary"><b>Categories</b></h2>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <button type="button" class="btn btn-primary" (click)="showAddEditModal()">Add Category</button>
+            </div>
+            <!-- <hr /> -->
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="carc" style="min-height:550px">
+            <div class="text-left table-responsive pr-5p pl-5p">
+                <hr>
+                <table class="mt-20 table table-bordered table-hover table-striped" [dtOptions]="dtOptions" datatable
+                    [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr class="text-white text-nowrap bg-dark">
+                            <th class="text-white bg-dark" style="width: 50px;">S.No.</th>
+                            <th class="text-white bg-dark">Image</th>
+                            <th class="text-white bg-dark">Name</th>
+                            <th class="text-white bg-dark">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let category of categoryList; let i=index">
+                            <th>{{i+1}}</th>
+                            <th><img src="{{category.image}}" width="40px" height="40px"></th>
+                            <th>{{category.name | titlecase}}</th>
+
+                            <th>
+                                <div class="btn-group">
+                                    <button type="button" class="tn btn-sm btn-outline-primary mr-1"
+                                        (click)="showAddEditModal(category)"><i class="fa fa-pencil"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                        (click)="showshowActionModal(category)"><i class="fa fa-trash-o"></i></button>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <pre [innerHtml]="categoryList | json"></pre> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #showAddEditCategoryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false, animated: true}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-white">{{newCategory._id ? 'Edit' : 'Add'}} Category</h4>
+                <button type="button" class="close text-white" (click)="closeModel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row row-xs align-items-center mg-b-20">
+                    <div class="col-md-12 mb-4">
+                        <div *ngIf="selectedImage.imageUrl || newCategory._id" class="mb-10">
+                            <img [src]="selectedImage.imageUrl ? selectedImage.imageUrl : newCategory.image" class="img-fluid"
+                                width="100px" height="100px">
+                        </div>
+                        <label class="font-weight-bold mg-b-0" for="categoryImg">
+                            Category Image
+                            <sup> <i class="fa fa-star star-icon" aria-hidden="true" [ngClass]="{'text-secondary': !newCategory?.image, 'text-primary': newCategory?.image}"></i>
+                            </sup>
+                        </label>
+                        <input #imgFileInput class="form-control" type="file" (change)="uploadImg($event)"
+                            accept='image/jpeg,image/jpg,image/png'>
+                    </div>
+
+                    <div class="col-md-12 mg-t-5 mg-md-t-0">
+                        <label class="font-weight-bold mg-b-0">
+                            Category Name
+                            <sup> <i class="fa fa-star star-icon" aria-hidden="true"
+                                    [ngClass]="{'text-secondary': !newCategory?.name, 'text-primary': newCategory?.name}"></i>
+                            </sup>
+                        </label>
+                        <input type="text" id="name" maxlength="40" name="name" [(ngModel)]="newCategory.name"
+                            class="form-control" placeholder="Please enter Category name"
+                            (ngModelChange)="checkAlreadyExitCategory(newCategory)" appRemoveWhitespace>
+                    </div>
+
+                </div>
+
+                <!-- <pre [innerHtml]="selectedImage | json"> </pre> -->
+
+            </div>
+            <div class="modal-footer">
+
+                <app-alert></app-alert>
+                <button class="btn btn-primary" [disabled]="!newCategoryAlready"
+                    (click)="saveImage()">{{newCategory._id ? 'Update': 'Save'}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #deleteCategoryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-white"><i class="fa fa-trash"></i> Delete Category</h4>
+                <button type="button" class="close text-white" (click)="closeModel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure want to delete this Category?</h4>
+                <p>
+                    <b>Category Name:</b> {{newCategory?.name}}<br />
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="closeModel()">Close</button>
+                <button type="button" class="btn btn-danger" (click)="deleteCategory()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

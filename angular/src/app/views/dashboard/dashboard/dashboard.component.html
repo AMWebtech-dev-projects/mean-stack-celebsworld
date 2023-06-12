@@ -1,0 +1,58 @@
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12">
+      <h4>
+        <b>Dashboard</b>
+      </h4>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-lg-3">
+      <a [routerLink]="['/user-list']" class="card text-white bg-primary">
+        <div class="card-body">
+          <div class="text-right font-size-20">
+            {{dashboardInfo.userList.length}}
+            <div>Total Users</div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <a [routerLink]="['/artists/manage-artist']" class="card text-white bg-info">
+        <div class="card-body">
+          <div class="text-right font-size-20">
+            {{dashboardInfo.artistList.length}}
+            <div>Total Artists</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <a [routerLink]="['/categories']" class="card text-white bg-danger">
+        <div class="card-body">
+          <div class="text-right font-size-20">
+            {{dashboardInfo.categoryList.length}}
+            <div>Total Categories</div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <a [routerLink]="['/orders']" class="card text-white bg-warning">
+        <div class="card-body">
+          <div class="text-right font-size-20">
+            {{dashboardInfo.orderList.length}}
+            <div>Total Orders</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  
+  
+  
+</div>
+
