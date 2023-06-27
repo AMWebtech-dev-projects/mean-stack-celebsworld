@@ -17,13 +17,7 @@ export class JwtService {
     return window.localStorage.getItem('celebsJwtToken');
   }
   saveCurrentUser(userDetails) {
-    window.localStorage.setItem(
-      'celebsCurrentUser',
-      CryptoJS.AES.encrypt(
-        userDetails,
-        window.localStorage.getItem('celebsJwtToken')
-      ).toString()
-    );
+
   }
   getCurrentUser(): any {
     if (window.localStorage.getItem('celebsJwtToken')) {
